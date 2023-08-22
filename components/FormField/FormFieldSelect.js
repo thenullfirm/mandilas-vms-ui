@@ -12,7 +12,7 @@ export default function FormField(props) {
         <option value="">-- Please select an Employee name --</option>
         {employeeInfo.map((emp, index) => {
           return (
-            <option key={index} value={emp.employeeName}>
+            <option key={index} value={emp._id}>
               {emp.employeeName}
             </option>
           );
