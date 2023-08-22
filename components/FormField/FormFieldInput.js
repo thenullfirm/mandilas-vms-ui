@@ -6,7 +6,14 @@ export default function FormField(props) {
       <label className={styles.formLabel} htmlFor={props.id}>
         {props.label}
       </label>
-      <input className={styles.inputField} name={props.id} type={props.type} placeholder={props.label} />
+      <input
+        className={styles.inputField}
+        name={props.id}
+        type={props.type}
+        placeholder={props.label}
+        required={true}
+        value={props.value}
+      />
     </div>
   );
 }
