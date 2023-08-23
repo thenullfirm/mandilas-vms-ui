@@ -10,16 +10,20 @@ export default function Home() {
   const [welcome, setWelcome] = useState([]);
   const [employeeData, setEmployees] = useState([]);
   const [formData, setFormData] = useState({});
-  const [visitorData, setVisitorData] = useState([]);
+  // const [visitorData, setVisitorData] = useState([]);
+  const [notification, setNotification] = useState('');
 
   useEffect(() => {
     fetchWelcome();
     fetchEmployeeNames();
   }, []);
 
+  // const serverUrl = 'https://mandilas-api.onrender.com';
+  const serverUrl = 'http://localhost:5000';
+
   const fetchWelcome = async () => {
     try {
-      const response = await fetch('https://mandilas-api.onrender.com/');
+      const response = await fetch(`${serverUrl}`);
       const jsonData = await response.json();
       setWelcome(jsonData);
     } catch (error) {
@@ -29,7 +33,7 @@ export default function Home() {
 
   const fetchEmployeeNames = async () => {
     try {
-      const response = await fetch('https://mandilas-api.onrender.com/employees');
+      const response = await fetch(`${serverUrl}/employees`);
       const jsonData = await response.json();
       setEmployees(jsonData);
     } catch (error) {
@@ -39,8 +43,8 @@ export default function Home() {
 
   const submitForm = async () => {
     try {
-      console.log('Form data:', formData);
-      const response = await fetch('https://mandilas-api.onrender.com/visitors', {
+      // console.log('Form data:', formData);
+      const response = await fetch(`${serverUrl}/visitors`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,8 +52,8 @@ export default function Home() {
         body: JSON.stringify(formData),
       });
       const responseData = await response.json();
-      setVisitorData(responseData);
-      console.log('Visitor data:', visitorData);
+      // setVisitorData(responseData);
+      // console.log('Visitor data:', visitorData);
     } catch (error) {
       console.error('Error posting data:', error);
     }
@@ -68,13 +72,47 @@ export default function Home() {
     setFormData(visitorForm);
     submitForm();
     event.preventDefault();
+    setNotification(true);
+    console.log(employeeData);
+    formInfo.reset();
+  };
+
+  const clearNotification = () => {
+    setNotification('');
   };
 
   return (
     <div>
-      <Link href="/">
-        <h2>{welcome === [] ? 'Loading ...' : welcome.info}</h2>
-      </Link>
+      <span>
+        {notification ? (
+          <p style={{ marginBottom: 20, color: 'grey', fontSize: 20 }}>
+            You have successfully scheduled a meeting with{' '}
+            {employeeData.map((emp) => {
+              if (emp._id === formData.employee) {
+                return emp.employeeName;
+              }
+            })}
+            <span
+              onClick={clearNotification}
+              style={{
+                marginLeft: 20,
+                color: 'red',
+                fontWeight: 'bold',
+                fontSize: 40,
+                marginRight: 10,
+                border: '1px solid red',
+                padding: '2px 6px',
+                borderRadius: 60,
+              }}
+            >
+              x
+            </span>
+          </p>
+        ) : (
+          ''
+        )}
+      </span>
+      <h2>{!welcome.info ? 'Loading ...' : <Link href="/">{welcome.info}</Link>}</h2>
       <form onSubmit={handleSubmit}>
         <FormFieldInput type="text" id="visitorName" label="Visitor name" />
         <FormFieldInput type="text" id="visitorEmail" label="Visitor email" />
@@ -82,7 +120,6 @@ export default function Home() {
         <FormFieldInput type="datetime-local" id="timeOfVisit" label="Time of visitor" />
         <Submit title="Schedule Meeting" />
       </form>
-      <hr />
     </div>
   );
 }

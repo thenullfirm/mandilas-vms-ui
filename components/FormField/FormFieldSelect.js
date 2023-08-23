@@ -8,7 +8,7 @@ export default function FormField(props) {
       <label className={styles.formLabel} htmlFor={props.id}>
         {props.label}
       </label>
-      <select name={props.id}>
+      <select name={props.id} required={true}>
         <option value="">-- Please select an Employee name --</option>
         {employeeInfo.map((emp, index) => {
           return (
