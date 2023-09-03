@@ -10,7 +10,6 @@ export default function Home() {
   const [welcome, setWelcome] = useState([]);
   const [employeeData, setEmployees] = useState([]);
   const [formData, setFormData] = useState({});
-  // const [visitorData, setVisitorData] = useState([]);
   const [notification, setNotification] = useState('');
 
   useEffect(() => {
@@ -73,7 +72,6 @@ export default function Home() {
     submitForm();
     event.preventDefault();
     setNotification(true);
-    console.log(employeeData);
     formInfo.reset();
   };
 
