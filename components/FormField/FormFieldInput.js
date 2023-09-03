@@ -2,6 +2,8 @@ import styles from './FormField.module.css';
 import { DateTime } from 'luxon';
 
 export default function FormField(props) {
+  const minimumTime = DateTime.fromISO(new Date().toISOString()).plus({ hours: 2 }).toString().slice(0, -13);
+
   return (
     <div className={styles.formSection}>
       <label className={styles.formLabel} htmlFor={props.id}>
@@ -12,7 +14,7 @@ export default function FormField(props) {
           className={styles.inputField}
           name={props.id}
           type={props.type}
-          min={DateTime.fromISO(new Date().toISOString()).plus({ hours: 2 }).toString().slice(0, -13)}
+          min={minimumTime}
           placeholder={props.label}
           required={true}
         />
