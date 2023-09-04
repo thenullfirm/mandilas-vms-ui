@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-
+import serverUrl from '@/config/serverUrl';
 import mainStyles from '@/app/globals.css';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import FormFieldSelect from '@/components/FormField/FormFieldSelect';
@@ -16,9 +16,6 @@ export default function Home() {
     fetchWelcome();
     fetchEmployeeNames();
   }, []);
-
-  // const serverUrl = 'https://mandilas-api.onrender.com';
-  const serverUrl = 'http://localhost:5000';
 
   const fetchWelcome = async () => {
     try {
