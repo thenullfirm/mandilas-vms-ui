@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-
+import serverUrl from '@/config/serverUrl';
 import mainStyles from '@/app/globals.css';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import FormFieldSelect from '@/components/FormField/FormFieldSelect';
@@ -10,16 +10,12 @@ export default function Home() {
   const [welcome, setWelcome] = useState([]);
   const [employeeData, setEmployees] = useState([]);
   const [formData, setFormData] = useState({});
-  // const [visitorData, setVisitorData] = useState([]);
   const [notification, setNotification] = useState('');
 
   useEffect(() => {
     fetchWelcome();
     fetchEmployeeNames();
   }, []);
-
-  // const serverUrl = 'https://mandilas-api.onrender.com';
-  const serverUrl = 'http://localhost:5000';
 
   const fetchWelcome = async () => {
     try {
@@ -73,7 +69,6 @@ export default function Home() {
     submitForm();
     event.preventDefault();
     setNotification(true);
-    console.log(employeeData);
     formInfo.reset();
   };
 
