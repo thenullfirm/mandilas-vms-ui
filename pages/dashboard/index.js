@@ -20,7 +20,6 @@ export default function Dashboard() {
       const response = await fetch(`${serverUrl}/admin`);
       const responseData = await response.json();
       const adminData = responseData[0];
-      console.log(adminData);
       loginRedirect(adminData);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -41,7 +40,6 @@ export default function Dashboard() {
         body: JSON.stringify({ username: adminData.username }),
       });
       const adminResponseData = await adminResponse.json();
-      console.log(adminResponseData);
       loginRedirect(adminData);
       location.reload();
     } catch (error) {
