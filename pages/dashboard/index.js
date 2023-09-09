@@ -6,11 +6,13 @@ export default function Dashboard() {
   let employeeData;
   let visitorData;
 
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [schedule, setSchedule] = useState([]);
+
   const { push } = useRouter();
 
   useEffect(() => {
     getAdmin();
-    getEmployees();
     getVisitors();
   }, []);
 
@@ -20,24 +22,12 @@ export default function Dashboard() {
     }
   };
 
-  const selectEmployee = (id) => {
-    const output = [];
-
-    for (let i = 0; i < employeeData.length; i++) {
-      if (employeeData[i]._id === id) {
-        output.push(employeeData[i].employeeName);
-        output.push(employeeData[i].employeeEmail);
-      }
-    }
-
-    return output;
-  };
-
-  const getEmployees = async () => {
+  const getEmployee = async (id) => {
     try {
-      const response = await fetch(`${serverUrl}/employees`);
+      const response = await fetch(`${serverUrl}/employees/${id}`);
       const responseData = await response.json();
       employeeData = responseData;
+      return employeeData;
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -51,31 +41,27 @@ export default function Dashboard() {
 
       // console.log('Visitor data:', visitorData);
 
-      let visitBucket = [];
+      const visitBucket = [];
 
       for (const [key, value] of Object.entries(visitorData)) {
-        const visitorRow = [];
-        visitorRow.push(value.visitorName);
-        visitorRow.push(value.visitorEmail);
-        const innerRow = [];
-
         for (const [innerKey, innerValue] of Object.entries(value.visits)) {
-          innerRow.push([innerValue.employee, innerValue.timeOfVisit]);
-        }
+          const visitorRow = [];
 
-        visitorRow.push(innerRow);
-        visitBucket.push(visitorRow);
+          visitorRow.push(value.visitorName);
+          visitorRow.push(value.visitorEmail);
+
+          const employeeId = innerValue.employee;
+          const employeeInfo = await getEmployee(employeeId);
+
+          visitorRow.push(innerValue.timeOfVisit, employeeInfo['employeeName'], employeeInfo['employeeEmail']);
+
+          visitBucket.push(visitorRow);
+        }
       }
 
-      for (let i = 0; i < visitBucket.length; i++) {
-        const scheduleInfo = visitBucket[i][visitBucket[i].length - 1];
-        for (let x = 0; x < scheduleInfo.length; x++) {
-          const [employeeId, timeOfVisit] = scheduleInfo[x];
-          console.log([selectEmployee(employeeId)], timeOfVisit);
-        }
-      }
-
-      // console.log(visitBucket);
+      setDataLoaded(true);
+      console.log(visitBucket);
+      setSchedule(visitBucket);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -116,6 +102,44 @@ export default function Dashboard() {
   return (
     <div>
       <h2>Dashboard</h2>
+      {!dataLoaded ? (
+        <p>Loading ...</p>
+      ) : (
+        <table className="table">
+          <thead>
+            <tr style={{ color: 'red', textAlign: 'left' }}>
+              <th scope="col">Visitor Name</th>
+              <span style={{ margin: '30px' }}></span>
+              <th scope="col">Visitor Email</th>
+              <span style={{ margin: '30px' }}></span>
+              <th scope="col">Time of Visit</th>
+              <span style={{ margin: '30px' }}></span>
+              <th scope="col">Employee Name</th>
+              <span style={{ margin: '30px' }}></span>
+              <th scope="col">Employee Email</th>
+            </tr>
+          </thead>
+          <tbody style={{ textAlign: 'left' }}>
+            {schedule.map((info) => {
+              console.log(info);
+              const date = new Date(`${info[2]}`).toLocaleString();
+              return (
+                <tr key={info.index}>
+                  <th scope="row">{`${info[0]}`}</th>
+                  <span style={{ margin: '30px' }}></span>
+                  <td>{`${info[1]}`}</td>
+                  <span style={{ margin: '30px' }}></span>
+                  <td>{`${date}`}</td>
+                  <span style={{ margin: '30px' }}></span>
+                  <td>{`${info[3]}`}</td>
+                  <span style={{ margin: '30px' }}></span>
+                  <td>{`${info[4]}`}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      )}
       <button onClick={logout}>Logout</button>
     </div>
   );
