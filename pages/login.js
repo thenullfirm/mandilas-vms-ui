@@ -36,8 +36,6 @@ export default function Login() {
     loginData['username'] = formInfo.username.value;
     loginData['password'] = formInfo.password.value;
 
-    console.log('Login data:', loginData);
-
     try {
       const response = await fetch(`${serverUrl}/admin/login`, {
         method: 'POST',
