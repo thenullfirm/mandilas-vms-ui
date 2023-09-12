@@ -45,26 +45,70 @@ export default function Dashboard() {
 
       for (const [key, value] of Object.entries(visitorData)) {
         for (const [innerKey, innerValue] of Object.entries(value.visits)) {
-          const visitorRow = [];
-
-          visitorRow.push(value.visitorName);
-          visitorRow.push(value.visitorEmail);
+          const visitorRow = [innerValue.timeOfVisit];
 
           const employeeId = innerValue.employee;
           const employeeInfo = await getEmployee(employeeId);
 
-          visitorRow.push(innerValue.timeOfVisit, employeeInfo['employeeName'], employeeInfo['employeeEmail']);
+          visitorRow.push(value.visitorName);
+          visitorRow.push(value.visitorEmail);
+          visitorRow.push(employeeInfo['employeeName']);
+          visitorRow.push(employeeInfo['employeeEmail']);
+          visitorRow.push(employeeId);
+
+          // visitorRow.sort();
 
           visitBucket.push(visitorRow);
         }
       }
 
       setDataLoaded(true);
-      console.log(visitBucket);
+      // console.log(visitBucket);
       setSchedule(visitBucket);
+      // 5 = employee id ; 0 = time of visit
+      scheduleFilter('time');
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+  };
+
+  const scheduleFilter = (value) => {
+    const display = {};
+
+    let anchor;
+
+    if (value === 'employee') {
+      anchor = 5;
+
+      for (const visit in schedule) {
+        // console.log(schedule[visit]);
+
+        if (!display.hasOwnProperty(schedule[visit][anchor])) {
+          display[`${schedule[visit][anchor]}`] = [];
+        } else {
+          display[`${schedule[visit][anchor]}`].push(schedule[visit]);
+        }
+      }
+    } else if (value === 'time') {
+      anchor = 0;
+
+      for (const visit in schedule) {
+        // console.log(schedule[visit]);
+
+        const time = schedule[visit][anchor];
+        const dateChunk = time.slice(0, 10);
+        const rawDate = new Date(dateChunk).toUTCString();
+        const outputDate = rawDate.slice(0, 16);
+
+        if (!display.hasOwnProperty(outputDate)) {
+          display[`${outputDate}`] = [];
+        } else {
+          display[`${outputDate}`].push(schedule[visit]);
+        }
+      }
+    }
+
+    console.log(display);
   };
 
   const getAdmin = async () => {
@@ -107,12 +151,12 @@ export default function Dashboard() {
       ) : (
         <table className="table">
           <thead>
-            <tr style={{ color: 'red', textAlign: 'left' }}>
+            <tr style={{ color: 'red', textAlign: 'left', fontSize: '20px' }}>
+              <th scope="col">Time of Visit</th>
+              <span style={{ margin: '30px' }}></span>
               <th scope="col">Visitor Name</th>
               <span style={{ margin: '30px' }}></span>
               <th scope="col">Visitor Email</th>
-              <span style={{ margin: '30px' }}></span>
-              <th scope="col">Time of Visit</th>
               <span style={{ margin: '30px' }}></span>
               <th scope="col">Employee Name</th>
               <span style={{ margin: '30px' }}></span>
@@ -121,15 +165,15 @@ export default function Dashboard() {
           </thead>
           <tbody style={{ textAlign: 'left' }}>
             {schedule.map((info) => {
-              console.log(info);
-              const date = new Date(`${info[2]}`).toLocaleString();
+              // console.log(info);
+              const date = new Date(`${info[0]}`).toLocaleString();
               return (
                 <tr key={info.index}>
-                  <th scope="row">{`${info[0]}`}</th>
+                  <th scope="row">{`${date}`}</th>
                   <span style={{ margin: '30px' }}></span>
                   <td>{`${info[1]}`}</td>
                   <span style={{ margin: '30px' }}></span>
-                  <td>{`${date}`}</td>
+                  <td>{`${info[2]}`}</td>
                   <span style={{ margin: '30px' }}></span>
                   <td>{`${info[3]}`}</td>
                   <span style={{ margin: '30px' }}></span>
