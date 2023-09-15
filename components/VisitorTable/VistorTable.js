@@ -1,3 +1,5 @@
+import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer } from '@chakra-ui/react';
+
 export default function EmployeeTable(props) {
   let anchor;
   return (
@@ -6,40 +8,42 @@ export default function EmployeeTable(props) {
         const feedback = visits[1];
         anchor = props.data.filter === 'employee' ? visits[0].split(',')[0] : visits[0];
         return (
-          <div key={visits.index}>
+          <TableContainer key={visits.index}>
             <h2 style={{ color: 'green' }}>{anchor}</h2>
-            <table id={props.tableId}>
-              <tr style={{ color: 'red', textAlign: 'left', fontSize: '20px' }}>
-                <th>Time of Visit</th>
-                <span style={{ margin: '30px' }}></span>
-                <th>Visitor Name</th>
-                <span style={{ margin: '30px' }}></span>
-                <th>Visitor Email</th>
-                <span style={{ margin: '30px' }}></span>
-                <th>Employee Name</th>
-                <span style={{ margin: '30px' }}></span>
-                <th>Employee Email</th>
-              </tr>
-              <tbody style={{ textAlign: 'left' }}>
+            <Table id={props.tableId} variant="simple">
+              <Thead>
+                <Tr style={{ color: 'red', textAlign: 'left', fontSize: '20px' }}>
+                  <Th>Time of Visit</Th>
+                  <span style={{ margin: '30px' }}></span>
+                  <Th>Visitor Name</Th>
+                  <span style={{ margin: '30px' }}></span>
+                  <Th>Visitor Email</Th>
+                  <span style={{ margin: '30px' }}></span>
+                  <Th>Employee Name</Th>
+                  <span style={{ margin: '30px' }}></span>
+                  <Th>Employee Email</Th>
+                </Tr>
+              </Thead>
+              <Tbody style={{ textAlign: 'left' }}>
                 {feedback.map((info) => {
                   const date = new Date(`${info[0]}`).toLocaleString();
                   return (
-                    <tr key={info.index}>
-                      <td>{`${date}`}</td>
+                    <Tr key={info.index}>
+                      <Td>{`${date}`}</Td>
                       <span style={{ margin: '30px' }}></span>
-                      <td>{`${info[1]}`}</td>
+                      <Td>{`${info[1]}`}</Td>
                       <span style={{ margin: '30px' }}></span>
-                      <td>{`${info[2]}`}</td>
+                      <Td>{`${info[2]}`}</Td>
                       <span style={{ margin: '30px' }}></span>
-                      <td>{`${info[3]}`}</td>
+                      <Td>{`${info[3]}`}</Td>
                       <span style={{ margin: '30px' }}></span>
-                      <td>{`${info[4]}`}</td>
-                    </tr>
+                      <Td>{`${info[4]}`}</Td>
+                    </Tr>
                   );
                 })}
-              </tbody>
-            </table>
-          </div>
+              </Tbody>
+            </Table>
+          </TableContainer>
         );
       })}
     </div>

@@ -7,6 +7,8 @@ import getEmployee from '@/config/getEmployee';
 import { useRouter } from 'next/navigation';
 import VisitorTable from '@/components/VisitorTable/VistorTable';
 
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+
 export default function Dashboard() {
   let visitorData;
 
@@ -117,26 +119,24 @@ export default function Dashboard() {
       {!dataLoaded ? (
         <p>Loading ...</p>
       ) : (
-        <div>
-          <ul className="nav nav-tabs">
-            <li className="nav-item">
-              <a className="nav-link" href="#time">
-                Time of Visit
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#employee">
-                Employees
-              </a>
-            </li>
-          </ul>
+        <Tabs>
+          <TabList>
+            <Tab>Time of Visit</Tab>
+            <Tab>Employees</Tab>
+          </TabList>
 
           {console.log('time: ', timeSchedule.list)}
           {console.log('employee: ', employeeSchedule.list)}
 
-          <VisitorTable tableId="time" data={timeSchedule} />
-          <VisitorTable tableId="employee" data={employeeSchedule} />
-        </div>
+          <TabPanels>
+            <TabPanel>
+              <VisitorTable tableId="time" data={timeSchedule} />
+            </TabPanel>
+            <TabPanel>
+              <VisitorTable tableId="employee" data={employeeSchedule} />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       )}
       <button onClick={logout}>Logout</button>
     </div>
