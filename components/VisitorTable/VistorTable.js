@@ -8,26 +8,24 @@ export default function EmployeeTable(props) {
         return (
           <div key={visits.index}>
             <h2 style={{ color: 'green' }}>{anchor}</h2>
-            <table className="table" id={props.tableId}>
-              <thead>
-                <tr style={{ color: 'red', textAlign: 'left', fontSize: '20px' }}>
-                  <th scope="col">Time of Visit</th>
-                  <span style={{ margin: '30px' }}></span>
-                  <th scope="col">Visitor Name</th>
-                  <span style={{ margin: '30px' }}></span>
-                  <th scope="col">Visitor Email</th>
-                  <span style={{ margin: '30px' }}></span>
-                  <th scope="col">Employee Name</th>
-                  <span style={{ margin: '30px' }}></span>
-                  <th scope="col">Employee Email</th>
-                </tr>
-              </thead>
+            <table id={props.tableId}>
+              <tr style={{ color: 'red', textAlign: 'left', fontSize: '20px' }}>
+                <th>Time of Visit</th>
+                <span style={{ margin: '30px' }}></span>
+                <th>Visitor Name</th>
+                <span style={{ margin: '30px' }}></span>
+                <th>Visitor Email</th>
+                <span style={{ margin: '30px' }}></span>
+                <th>Employee Name</th>
+                <span style={{ margin: '30px' }}></span>
+                <th>Employee Email</th>
+              </tr>
               <tbody style={{ textAlign: 'left' }}>
                 {feedback.map((info) => {
                   const date = new Date(`${info[0]}`).toLocaleString();
                   return (
                     <tr key={info.index}>
-                      <th scope="row">{`${date}`}</th>
+                      <td>{`${date}`}</td>
                       <span style={{ margin: '30px' }}></span>
                       <td>{`${info[1]}`}</td>
                       <span style={{ margin: '30px' }}></span>
