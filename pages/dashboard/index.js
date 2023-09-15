@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import serverUrl from '@/config/serverUrl';
 import scheduleFilter from '@/config/scheduleFilter';
+import getEmployee from '@/config/getEmployee';
 import { useRouter } from 'next/navigation';
 import VisitorTable from '@/components/VisitorTable/VistorTable';
 
 export default function Dashboard() {
-  let employeeData;
   let visitorData;
 
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [schedule, setSchedule] = useState([]);
+  const [employeeSchedule, setEmployeeSchedule] = useState([]);
+  const [timeSchedule, setTimeSchedule] = useState([]);
 
   const { push } = useRouter();
 
@@ -21,17 +22,6 @@ export default function Dashboard() {
   const loginRedirect = (info) => {
     if (!info.loggedIn) {
       push('/login');
-    }
-  };
-
-  const getEmployee = async (id) => {
-    try {
-      const response = await fetch(`${serverUrl}/employees/${id}`);
-      const responseData = await response.json();
-      employeeData = responseData;
-      return employeeData;
-    } catch (error) {
-      console.error('Error fetching data:', error);
     }
   };
 
@@ -80,8 +70,8 @@ export default function Dashboard() {
 
       /* 5 = employee id ; 0 = time of visit*/
       setDataLoaded(true);
-      setSchedule(scheduleFilter(visitBucket, 'employee'));
-      // setSchedule(scheduleFilter(visitBucket, 'time'));
+      setEmployeeSchedule(scheduleFilter(visitBucket, 'employee'));
+      setTimeSchedule(scheduleFilter(visitBucket, 'time'));
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -139,10 +129,11 @@ export default function Dashboard() {
             </li>
           </ul>
 
-          {console.log('schedule: ', schedule.list)}
+          {console.log('time: ', timeSchedule.list)}
+          {console.log('employee: ', employeeSchedule.list)}
 
-          {/* <EmployeeTable tableId="time" data={schedule} /> */}
-          {/* <VisitorTable tableId="employee" data={schedule} /> */}
+          <VisitorTable tableId="time" data={timeSchedule} />
+          <VisitorTable tableId="employee" data={employeeSchedule} />
         </div>
       )}
       <button onClick={logout}>Logout</button>
