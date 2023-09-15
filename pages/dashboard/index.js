@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import serverUrl from '@/config/serverUrl';
+import scheduleFilter from '@/config/scheduleFilter';
 import { useRouter } from 'next/navigation';
+import VisitorTable from '@/components/VisitorTable/VistorTable';
 
 export default function Dashboard() {
   let employeeData;
@@ -33,6 +35,8 @@ export default function Dashboard() {
     }
   };
 
+  const visitBucket = [];
+
   const getVisitors = async () => {
     try {
       const response = await fetch(`${serverUrl}/visitors`);
@@ -40,8 +44,6 @@ export default function Dashboard() {
       visitorData = responseData;
 
       // console.log('Visitor data:', visitorData);
-
-      const visitBucket = [];
 
       for (const [key, value] of Object.entries(visitorData)) {
         for (const [innerKey, innerValue] of Object.entries(value.visits)) {
@@ -56,59 +58,33 @@ export default function Dashboard() {
           visitorRow.push(employeeInfo['employeeEmail']);
           visitorRow.push(employeeId);
 
-          // visitorRow.sort();
-
           visitBucket.push(visitorRow);
         }
       }
 
+      /* sort visitor info by date in descending order */
+      visitBucket.sort((a, b) => {
+        const aTime = new Date(`${a[0]}`);
+        const bTime = new Date(`${b[0]}`);
+        if (aTime && bTime) {
+          return aTime - bTime;
+        } else if (aTime) {
+          return -1;
+        } else if (bTime) {
+          return 1;
+        }
+        return 0;
+      });
+
+      visitBucket.reverse();
+
+      /* 5 = employee id ; 0 = time of visit*/
       setDataLoaded(true);
-      // console.log(visitBucket);
-      setSchedule(visitBucket);
-      // 5 = employee id ; 0 = time of visit
-      scheduleFilter('time');
+      setSchedule(scheduleFilter(visitBucket, 'employee'));
+      // setSchedule(scheduleFilter(visitBucket, 'time'));
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
-
-  const scheduleFilter = (value) => {
-    const display = {};
-
-    let anchor;
-
-    if (value === 'employee') {
-      anchor = 5;
-
-      for (const visit in schedule) {
-        // console.log(schedule[visit]);
-
-        if (!display.hasOwnProperty(schedule[visit][anchor])) {
-          display[`${schedule[visit][anchor]}`] = [];
-        } else {
-          display[`${schedule[visit][anchor]}`].push(schedule[visit]);
-        }
-      }
-    } else if (value === 'time') {
-      anchor = 0;
-
-      for (const visit in schedule) {
-        // console.log(schedule[visit]);
-
-        const time = schedule[visit][anchor];
-        const dateChunk = time.slice(0, 10);
-        const rawDate = new Date(dateChunk).toUTCString();
-        const outputDate = rawDate.slice(0, 16);
-
-        if (!display.hasOwnProperty(outputDate)) {
-          display[`${outputDate}`] = [];
-        } else {
-          display[`${outputDate}`].push(schedule[visit]);
-        }
-      }
-    }
-
-    console.log(display);
   };
 
   const getAdmin = async () => {
@@ -149,40 +125,25 @@ export default function Dashboard() {
       {!dataLoaded ? (
         <p>Loading ...</p>
       ) : (
-        <table className="table">
-          <thead>
-            <tr style={{ color: 'red', textAlign: 'left', fontSize: '20px' }}>
-              <th scope="col">Time of Visit</th>
-              <span style={{ margin: '30px' }}></span>
-              <th scope="col">Visitor Name</th>
-              <span style={{ margin: '30px' }}></span>
-              <th scope="col">Visitor Email</th>
-              <span style={{ margin: '30px' }}></span>
-              <th scope="col">Employee Name</th>
-              <span style={{ margin: '30px' }}></span>
-              <th scope="col">Employee Email</th>
-            </tr>
-          </thead>
-          <tbody style={{ textAlign: 'left' }}>
-            {schedule.map((info) => {
-              // console.log(info);
-              const date = new Date(`${info[0]}`).toLocaleString();
-              return (
-                <tr key={info.index}>
-                  <th scope="row">{`${date}`}</th>
-                  <span style={{ margin: '30px' }}></span>
-                  <td>{`${info[1]}`}</td>
-                  <span style={{ margin: '30px' }}></span>
-                  <td>{`${info[2]}`}</td>
-                  <span style={{ margin: '30px' }}></span>
-                  <td>{`${info[3]}`}</td>
-                  <span style={{ margin: '30px' }}></span>
-                  <td>{`${info[4]}`}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div>
+          <ul className="nav nav-tabs">
+            <li className="nav-item">
+              <a className="nav-link" href="#time">
+                Time of Visit
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" href="#employee">
+                Employees
+              </a>
+            </li>
+          </ul>
+
+          {console.log('schedule: ', schedule.list)}
+
+          {/* <EmployeeTable tableId="time" data={schedule} /> */}
+          {/* <VisitorTable tableId="employee" data={schedule} /> */}
+        </div>
       )}
       <button onClick={logout}>Logout</button>
     </div>
