@@ -1,4 +1,6 @@
-// const serverUrl = 'https://mandilas-api.onrender.com';
-const serverUrl = 'http://localhost:5000';
+require('dotenv').config();
 
-module.exports = serverUrl;
+let serverUrl = process.env.NEXT_PUBLIC_API_URL;
+serverUrl = serverUrl.slice(1, -2);
+
+export default serverUrl;
