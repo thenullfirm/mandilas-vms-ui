@@ -13,7 +13,7 @@ export default function Login() {
 
   const loginRedirect = (info) => {
     if (info.loggedIn) {
-      push('/dashboard');
+      push('/dashboard/day');
     }
   };
 
