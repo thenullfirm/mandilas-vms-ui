@@ -1,12 +1,14 @@
-import { Table, Thead, Tbody, Tfoot, Tr, Th, Td, TableCaption, TableContainer } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from '@chakra-ui/react';
 
-export default function EmployeeTable(props) {
+export default function VistorTable(props) {
   let anchor;
+
   return (
     <div>
       {props.data.list.map((visits) => {
         const feedback = visits[1];
         anchor = props.data.filter === 'employee' ? visits[0].split(',')[0] : visits[0];
+
         return (
           <TableContainer key={visits.index}>
             <h2 style={{ color: 'green' }}>{anchor}</h2>
@@ -27,6 +29,7 @@ export default function EmployeeTable(props) {
               <Tbody style={{ textAlign: 'left' }}>
                 {feedback.map((info) => {
                   const date = new Date(`${info[0]}`).toLocaleString();
+
                   return (
                     <Tr key={info.index}>
                       <Td>{`${date}`}</Td>
