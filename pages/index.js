@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import serverUrl from '@/config/serverUrl';
-import mainStyles from '@/app/globals.css';
+import Link from 'next/link';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import FormFieldSelect from '@/components/FormField/FormFieldSelect';
 import Submit from '@/components/FormField/Submit';
