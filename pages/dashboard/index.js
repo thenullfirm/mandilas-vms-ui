@@ -1,12 +1,9 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 import serverUrl from '@/config/serverUrl';
 import scheduleFilter from '@/config/scheduleFilter';
 import getEmployee from '@/config/getEmployee';
 import { useRouter } from 'next/navigation';
 import VisitorTable from '@/components/VisitorTable/VistorTable';
-
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 
 export default function Dashboard() {
@@ -36,8 +33,6 @@ export default function Dashboard() {
       const response = await fetch(`${serverUrl}/visitors`);
       const responseData = await response.json();
       visitorData = responseData;
-
-      // console.log('Visitor data:', visitorData);
 
       for (const [key, value] of Object.entries(visitorData)) {
         for (const [innerKey, innerValue] of Object.entries(value.visits)) {
