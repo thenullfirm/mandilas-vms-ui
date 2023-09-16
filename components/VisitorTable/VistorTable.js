@@ -11,10 +11,11 @@ export default function VistorTable(props) {
 
         return (
           <TableContainer key={visits.index}>
-            <h2 style={{ color: 'green' }}>{anchor}</h2>
+            <h2 style={{ color: 'blue' }}>{anchor}</h2>
+
             <Table id={props.tableId} variant="simple">
               <Thead>
-                <Tr style={{ color: 'red', textAlign: 'left', fontSize: '20px' }}>
+                <Tr>
                   <Th>Time of Visit</Th>
                   <span style={{ margin: '30px' }}></span>
                   <Th>Visitor Name</Th>
