@@ -38,7 +38,6 @@ export default function Home() {
 
   const submitForm = async () => {
     try {
-      // console.log('Form data:', formData);
       const response = await fetch(`${serverUrl}/visitors`, {
         method: 'POST',
         headers: {
@@ -47,8 +46,6 @@ export default function Home() {
         body: JSON.stringify(formData),
       });
       const responseData = await response.json();
-      // setVisitorData(responseData);
-      // console.log('Visitor data:', visitorData);
     } catch (error) {
       console.error('Error posting data:', error);
     }
