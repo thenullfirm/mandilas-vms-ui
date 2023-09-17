@@ -13,7 +13,7 @@ export default function VistorTable(props) {
           <TableContainer key={visits.index}>
             <h2 style={{ color: 'blue' }}>{anchor}</h2>
 
-            <Table id={props.tableId} variant="simple">
+            <Table id={props.tableId} variant="simple" style={{ textAlign: 'left' }}>
               <Thead>
                 <Tr>
                   <Th>Time of Visit</Th>
@@ -27,7 +27,7 @@ export default function VistorTable(props) {
                   <Th>Employee Email</Th>
                 </Tr>
               </Thead>
-              <Tbody style={{ textAlign: 'left' }}>
+              <Tbody>
                 {feedback.map((info) => {
                   const date = new Date(`${info[0]}`).toLocaleString();
 
