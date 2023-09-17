@@ -4,10 +4,11 @@ import getVisitors from '@/config/getVisitors';
 import logout from '@/config/logout';
 import { useRouter } from 'next/navigation';
 import VisitorTable from '@/components/VisitorTable/VistorTable';
+import { data } from 'autoprefixer';
 
 export default function Dashboard() {
-  const dataLoaded = useRef();
-  const timeSchedule = useRef();
+  const dataRef = useRef();
+  const timeRef = useRef();
 
   const { push } = useRouter();
 
@@ -16,12 +17,19 @@ export default function Dashboard() {
       push('/login');
     }
   };
-
-  useEffect(async () => {
-    getAdmin(loginRedirect);
+  const getVisitorData = async () => {
     const { data, schedule } = await getVisitors('time');
-    // dataLoaded.current = data;
-    // timeSchedule.current = schedule;
+    dataRef.current = data;
+    timeRef.current = schedule;
+  };
+
+  const dataLoaded = dataRef.current;
+  const timeSchedule = timeRef.current;
+
+  useEffect(() => {
+    getAdmin(loginRedirect);
+
+    getVisitorData();
   }, []);
 
   return (
@@ -34,7 +42,7 @@ export default function Dashboard() {
           <h1 style={{ color: 'purple' }}>Date of Visit</h1>
           {console.log('time: ', timeSchedule.list)}
 
-          {/* <VisitorTable tableId="time" data={timeSchedule} /> */}
+          <VisitorTable tableId="time" data={timeSchedule} />
         </div>
       )}
       <button onClick={logout}>Logout</button>
