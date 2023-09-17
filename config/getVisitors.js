@@ -2,7 +2,6 @@ import serverUrl from './serverUrl';
 import getEmployee from './getEmployee';
 import scheduleFilter from './scheduleFilter';
 
-// const getVisitors = async (setData, setSchedule, filter) => {
 const getVisitors = async (filter) => {
   let visitorData;
   let visitBucket = [];
@@ -46,8 +45,6 @@ const getVisitors = async (filter) => {
     visitBucket.reverse();
 
     /* 5 = employee id ; 0 = time of visit*/
-    // setData(true);
-    // setSchedule(scheduleFilter(visitBucket, filter));
     return { data: true, schedule: scheduleFilter(visitBucket, filter) };
   } catch (error) {
     console.error('Error fetching data:', error);
