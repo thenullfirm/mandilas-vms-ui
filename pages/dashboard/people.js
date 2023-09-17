@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import getAdmin from '@/config/getAdmin';
 import getVisitors from '@/config/getVisitors';
 import logout from '@/config/logout';
@@ -6,9 +6,8 @@ import { useRouter } from 'next/navigation';
 import VisitorTable from '@/components/VisitorTable/VistorTable';
 
 export default function Dashboard() {
-  const [dataLoaded, setDataLoaded] = useState(false);
-  const [employeeSchedule, setEmployeeSchedule] = useState([]);
-  const [timeSchedule, setTimeSchedule] = useState([]);
+  const dataRef = useRef();
+  const employeeRef = useRef();
 
   const { push } = useRouter();
 
@@ -18,12 +17,20 @@ export default function Dashboard() {
     }
   };
 
+  const getVisitorData = async () => {
+    const { data, schedule } = await getVisitors('employee');
+    dataRef.current = data;
+    employeeRef.current = schedule;
+  };
+
+  const dataLoaded = dataRef.current;
+  const employeeSchedule = employeeRef.current;
+
   useEffect(() => {
     getAdmin(loginRedirect);
-    getVisitors(setDataLoaded, setEmployeeSchedule, 'employee');
-  }, []);
 
-  const visitBucket = [];
+    getVisitorData();
+  }, []);
 
   return (
     <div>
@@ -32,14 +39,12 @@ export default function Dashboard() {
         <p>Loading ...</p>
       ) : (
         <div>
-          <h1 style={{ color: 'purple' }}>Employee</h1>
-          {/* {console.log('time: ', timeSchedule.list)} */}
-          {console.log('employee: ', employeeSchedule.list)}
+          <h1 style={{ color: 'purple' }}>Employees</h1>
 
           <VisitorTable tableId="employee" data={employeeSchedule} />
         </div>
       )}
-      <button onClick={logout}>Logout</button>
+      <button onClick={() => logout(loginRedirect)}>Logout</button>
     </div>
   );
 }
