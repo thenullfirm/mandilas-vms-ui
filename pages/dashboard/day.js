@@ -40,7 +40,6 @@ export default function Dashboard() {
       ) : (
         <div>
           <h1 style={{ color: 'purple' }}>Date of Visit</h1>
-          {console.log('time: ', timeSchedule.list)}
 
           <VisitorTable tableId="time" data={timeSchedule} />
         </div>
