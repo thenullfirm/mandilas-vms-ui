@@ -1,6 +1,6 @@
 import serverUrl from './serverUrl';
 
-const logout = async () => {
+const logout = async (loginCheck) => {
   try {
     const response = await fetch(`${serverUrl}/admin`);
     const responseData = await response.json();
@@ -14,7 +14,7 @@ const logout = async () => {
       body: JSON.stringify({ username: adminData.username }),
     });
     const adminResponseData = await adminResponse.json();
-    loginRedirect(adminData);
+    loginCheck(adminData);
     location.reload();
   } catch (error) {
     console.error('Error posting data:', error);
