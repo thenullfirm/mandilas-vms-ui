@@ -4,7 +4,6 @@ import getVisitors from '@/config/getVisitors';
 import logout from '@/config/logout';
 import { useRouter } from 'next/navigation';
 import VisitorTable from '@/components/VisitorTable/VistorTable';
-import { data } from 'autoprefixer';
 
 export default function Dashboard() {
   const dataRef = useRef();
@@ -17,6 +16,7 @@ export default function Dashboard() {
       push('/login');
     }
   };
+
   const getVisitorData = async () => {
     const { data, schedule } = await getVisitors('time');
     dataRef.current = data;
@@ -45,7 +45,7 @@ export default function Dashboard() {
           <VisitorTable tableId="time" data={timeSchedule} />
         </div>
       )}
-      <button onClick={logout}>Logout</button>
+      <button onClick={() => logout(loginRedirect)}>Logout</button>
     </div>
   );
 }
