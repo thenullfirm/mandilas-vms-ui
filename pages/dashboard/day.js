@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import getAdmin from '@/config/getAdmin';
 import getVisitors from '@/config/getVisitors';
 import logout from '@/config/logout';
@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 import VisitorTable from '@/components/VisitorTable/VistorTable';
 
 export default function Dashboard() {
-  const dataRef = useRef();
-  const timeRef = useRef();
+  const [dataLoaded, setDataLoaded] = useState(false);
+  const [timeSchedule, setTimeSchedule] = useState({});
 
   const { push } = useRouter();
 
@@ -19,12 +19,9 @@ export default function Dashboard() {
 
   const getVisitorData = async () => {
     const { data, schedule } = await getVisitors('time');
-    dataRef.current = data;
-    timeRef.current = schedule;
+    setDataLoaded(data);
+    setTimeSchedule(schedule);
   };
-
-  const dataLoaded = dataRef.current;
-  const timeSchedule = timeRef.current;
 
   useEffect(() => {
     getAdmin(loginRedirect);
