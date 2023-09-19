@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import getAdmin from '@/config/getAdmin';
-import logout from '@/config/logout';
 import serverUrl from '@/config/serverUrl';
 import { useRouter } from 'next/navigation';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import Submit from '@/components/FormField/Submit';
+import NavBar from '@/components/Navigation/NavBar';
 
 export default function Dashboard() {
   const [formData, setFormData] = useState({});
@@ -49,6 +49,7 @@ export default function Dashboard() {
 
   return (
     <div>
+      <NavBar checker={loginRedirect} />
       <h1>Add Employee</h1>
       <div>
         <form onSubmit={handleSubmit}>
@@ -57,7 +58,6 @@ export default function Dashboard() {
           <Submit title="Add Employee" />
         </form>
       </div>
-      <button onClick={() => logout(loginRedirect)}>Logout</button>
     </div>
   );
 }

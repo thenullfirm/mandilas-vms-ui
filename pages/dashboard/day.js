@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import getAdmin from '@/config/getAdmin';
 import getVisitors from '@/config/getVisitors';
-import logout from '@/config/logout';
 import { useRouter } from 'next/navigation';
 import VisitorTable from '@/components/VisitorTable/VistorTable';
+import NavBar from '@/components/Navigation/NavBar';
 
 export default function Dashboard() {
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -31,6 +31,7 @@ export default function Dashboard() {
 
   return (
     <div>
+      <NavBar checker={loginRedirect} />
       <h1>Dashboard</h1>
       {!dataLoaded ? (
         <p>Loading ...</p>
@@ -41,7 +42,6 @@ export default function Dashboard() {
           <VisitorTable tableId="time" data={timeSchedule} />
         </div>
       )}
-      <button onClick={() => logout(loginRedirect)}>Logout</button>
     </div>
   );
 }
