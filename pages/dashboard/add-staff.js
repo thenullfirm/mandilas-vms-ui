@@ -52,7 +52,7 @@ export default function Dashboard() {
       <NavBar checker={loginRedirect} />
       <h1>Add Employee</h1>
       <div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} method="POST">
           <FormFieldInput type="text" id="employeeName" label="Employee name" />
           <FormFieldInput type="text" id="employeeEmail" label="Employee email" />
           <Submit title="Add Employee" />
