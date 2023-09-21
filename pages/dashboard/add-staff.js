@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import getAdmin from '@/config/getAdmin';
-import serverUrl from '@/config/serverUrl';
+import { serverUrl } from '@/next.config';
 import { useRouter } from 'next/navigation';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import Submit from '@/components/FormField/Submit';

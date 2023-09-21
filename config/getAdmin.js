@@ -1,4 +1,4 @@
-import serverUrl from './serverUrl';
+import { serverUrl } from '@/next.config';
 
 const getAdmin = async (loginCheck) => {
   try {

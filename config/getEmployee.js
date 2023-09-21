@@ -1,4 +1,4 @@
-import serverUrl from '@/config/serverUrl';
+import { serverUrl } from '@/next.config';
 
 const getEmployee = async (id) => {
   let employeeData;
