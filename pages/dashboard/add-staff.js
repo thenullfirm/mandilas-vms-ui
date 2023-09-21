@@ -7,9 +7,6 @@ import Submit from '@/components/FormField/Submit';
 import NavBar from '@/components/Navigation/NavBar';
 
 export default function Dashboard() {
-  const [formData, setFormData] = useState({});
-  const [feedback, setFeedback] = useState({});
-
   const { push } = useRouter();
 
   const loginRedirect = (info) => {
