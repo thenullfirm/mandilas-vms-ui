@@ -6,8 +6,6 @@ import FormFieldSelect from '@/components/FormField/FormFieldSelect';
 import Submit from '@/components/FormField/Submit';
 
 export default function Home() {
-  console.log(process.env.NEXT_PUBLIC_API_URL);
-
   const [welcome, setWelcome] = useState([]);
   const [employeeData, setEmployees] = useState([]);
   const [formData, setFormData] = useState({});
