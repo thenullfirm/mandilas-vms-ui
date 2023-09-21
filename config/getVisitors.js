@@ -1,4 +1,4 @@
-import { serverUrl } from '@/next.config';
+import { serverUrl } from '@/envConfig';
 import getEmployee from './getEmployee';
 import scheduleFilter from './scheduleFilter';
 

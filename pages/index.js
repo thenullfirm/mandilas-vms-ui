@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { serverUrl } from '@/next.config';
+import { serverUrl } from '@/envConfig';
 import Link from 'next/link';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import FormFieldSelect from '@/components/FormField/FormFieldSelect';
 import Submit from '@/components/FormField/Submit';
 
 export default function Home() {
-  console.log(process.env.API_URL);
+  console.log(process.env.NEXT_PUBLIC_API_URL);
 
   const [welcome, setWelcome] = useState([]);
   const [employeeData, setEmployees] = useState([]);

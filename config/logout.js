@@ -1,4 +1,4 @@
-import { serverUrl } from '@/next.config';
+import { serverUrl } from '@/envConfig';
 
 const logout = async (loginCheck) => {
   try {
