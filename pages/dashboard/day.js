@@ -31,7 +31,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <NavBar checker={loginRedirect} />
+      <NavBar internal="false" checker={loginRedirect} />
       <h1>Dashboard</h1>
       {!dataLoaded ? (
         <p>Loading ...</p>

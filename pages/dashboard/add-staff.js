@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import getAdmin from '@/config/getAdmin';
 import { serverUrl } from '@/envConfig';
 import { useRouter } from 'next/navigation';
@@ -46,7 +46,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <NavBar checker={loginRedirect} />
+      <NavBar internal="false" checker={loginRedirect} />
       <h1>Add Employee</h1>
       <div>
         <form onSubmit={handleSubmit} method="POST">

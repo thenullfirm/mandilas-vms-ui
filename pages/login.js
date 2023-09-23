@@ -3,7 +3,8 @@ import { useRouter } from 'next/navigation';
 import { serverUrl } from '@/envConfig';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import Submit from '@/components/FormField/Submit';
-// import '@/app/globals.css';
+import NavBar from '@/components/Navigation/NavBar';
+import '@/app/globals.css';
 
 export default function Login() {
   const { push } = useRouter();
@@ -56,13 +57,16 @@ export default function Login() {
   };
 
   return (
-    <div className="formBlock">
-      <h1 className="formTitle">Login to Dashboard</h1>
-      <form onSubmit={handleSubmit} method="POST">
-        <FormFieldInput type="text" id="username" label="Admin username" />
-        <FormFieldInput type="password" id="password" label="Password" />
-        <Submit title="Login to Dashboard" />
-      </form>
+    <div>
+      <NavBar internal="true" checker={loginRedirect} />
+      <div className="formBlock">
+        <h1 className="formTitle title">Login to Dashboard</h1>
+        <form onSubmit={handleSubmit} method="POST">
+          <FormFieldInput type="text" id="username" label="Admin username" />
+          <FormFieldInput type="password" id="password" label="Password" />
+          <Submit title="Login to Dashboard" />
+        </form>
+      </div>
     </div>
   );
 }

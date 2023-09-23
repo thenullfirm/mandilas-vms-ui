@@ -1,27 +1,17 @@
-import {
-  Box,
-  Flex,
-  Avatar,
-  HStack,
-  Text,
-  IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useDisclosure,
-  useColorModeValue,
-  Stack,
-} from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import Image from 'next/image';
+import { Box, Flex, HStack, Button, useColorModeValue } from '@chakra-ui/react';
 import logout from '@/config/logout';
+import '@/app/globals.css';
 
-const Links = [
+const DashboardLinks = [
   { title: 'Daily Visits', url: '/dashboard/day' },
   { title: 'Employee Visits', url: '/dashboard/people' },
   { title: 'Add Employee', url: '/dashboard/add-staff' },
+];
+
+const ExternalLinks = [
+  { title: 'Visitors Form', url: '/' },
+  { title: 'Dashboard Login', url: '/login' },
 ];
 
 const NavLink = (props) => {
@@ -44,24 +34,16 @@ const NavLink = (props) => {
   );
 };
 
-export default function NavBar(props) {
-  // const { isOpen, onOpen, onClose } = useDisclosure();
-
+function Navigation(props) {
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          {/* <IconButton
-            size={'md'}
-            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-            aria-label={'Open Menu'}
-            display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
-          /> */}
-          <HStack spacing={8} alignItems={'center'}>
-            <Box>Logo</Box>
-            <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-              {Links.map((data) => (
+      <Box px={4} id="navigation">
+        <Flex h={16}>
+          <HStack id="navContents" spacing={8} alignItems={'center'}>
+            <Image src="/mandilas-logo-coloured.png" width={20} height={20} alt="Picture of the author" />
+            <Box> Visitor Management System</Box>
+            <HStack as={'nav'} spacing={4}>
+              {props.links.map((data) => (
                 <NavLink key={data.url} href={data.url}>
                   {data.title}
                 </NavLink>
@@ -70,19 +52,11 @@ export default function NavBar(props) {
             </HStack>
           </HStack>
         </Flex>
-
-        {/* {isOpen ? (
-          <Box pb={4} display={{ md: 'none' }}>
-            <Stack as={'nav'} spacing={4}>
-              {Links.map((data) => (
-                <NavLink key={data.url} href={data.url}>
-                  {data.title}
-                </NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null} */}
       </Box>
     </>
   );
+}
+
+export default function NavBar(props) {
+  return <> {!props.internal ? <Navigation links={DashboardLinks} /> : <Navigation links={ExternalLinks} />}</>;
 }
