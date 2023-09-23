@@ -4,6 +4,7 @@ import Link from 'next/link';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import FormFieldSelect from '@/components/FormField/FormFieldSelect';
 import Submit from '@/components/FormField/Submit';
+import '@/app/globals.css';
 
 export default function Home() {
   const [welcome, setWelcome] = useState([]);
@@ -73,29 +74,17 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="formBlock">
       <span>
         {notification ? (
-          <p style={{ marginBottom: 20, color: 'grey', fontSize: 20 }}>
+          <p className="formNotice">
             You have successfully scheduled a meeting with{' '}
             {employeeData.map((emp) => {
               if (emp._id === formData.employee) {
                 return emp.employeeName;
               }
             })}
-            <span
-              onClick={clearNotification}
-              style={{
-                marginLeft: 20,
-                color: 'red',
-                fontWeight: 'bold',
-                fontSize: 40,
-                marginRight: 10,
-                border: '1px solid red',
-                padding: '2px 6px',
-                borderRadius: 60,
-              }}
-            >
+            <span onClick={clearNotification} className="clearNotification">
               x
             </span>
           </p>
@@ -103,7 +92,7 @@ export default function Home() {
           ''
         )}
       </span>
-      <h2>{!welcome.info ? 'Loading ...' : <Link href="/">{welcome.info}</Link>}</h2>
+      <h1 className="formTitle">{!welcome.info ? 'Loading ...' : <Link href="/">{welcome.info}</Link>}</h1>
       <form onSubmit={handleSubmit}>
         <FormFieldInput type="text" id="visitorName" label="Visitor name" />
         <FormFieldInput type="text" id="visitorEmail" label="Visitor email" />

@@ -1,4 +1,89 @@
+/* Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Main styles */
 body {
   font-size: 16px;
   padding: 2rem;
+  background-color: #232425;
+  color: #f0f0f0;
+}
+
+a,
+a:visited {
+  color: #f0f0f0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'EB Garamond', serif;
+}
+
+span,
+p,
+em,
+b,
+div,
+label {
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Form styling */
+.formBlock {
+  margin: 2rem 4rem;
+  padding: 0 30%;
+}
+
+form {
+  border: 0.0625px solid #2e8b57;
+  padding: 2rem 7rem;
+}
+
+label,
+input {
+  display: block;
+  font-size: 1.5rem;
+  width: 24rem;
+}
+
+.formTitle {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.formSection {
+  margin: 1rem 0 3rem 0;
+}
+
+.formLabel {
+  display: block;
+  margin: 1rem 0;
+}
+
+#submit {
+  background-color: #2e8b57;
+  color: #f0f0f0;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+/* Form notification */
+.formNotice {
+  margin-bottom: 2rem;
+}
+
+.clearNotification {
+  margin-left: 2rem;
+  color: 'red';
+  font-weight: 'bold';
+  font-size: 40;
+  margin-right: 10;
+  border: 1px solid red;
+  padding: 2px 6px;
+  border-radius: 60;
 }

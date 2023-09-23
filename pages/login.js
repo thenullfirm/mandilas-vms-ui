@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { serverUrl } from '@/envConfig';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import Submit from '@/components/FormField/Submit';
+// import '@/app/globals.css';
 
 export default function Login() {
   const { push } = useRouter();
@@ -55,8 +56,8 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="formBlock">
+      <h1 className="formTitle">Login to Dashboard</h1>
       <form onSubmit={handleSubmit} method="POST">
         <FormFieldInput type="text" id="username" label="Admin username" />
         <FormFieldInput type="password" id="password" label="Password" />
