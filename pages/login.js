@@ -58,7 +58,7 @@ export default function Login() {
 
   return (
     <div>
-      <NavBar internal="true" checker={loginRedirect} />
+      <NavBar internal={false} checker={loginRedirect} />
       <div className="formBlock">
         <h1 className="formTitle title">Login to Dashboard</h1>
         <form onSubmit={handleSubmit} method="POST">

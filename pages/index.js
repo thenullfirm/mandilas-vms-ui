@@ -86,7 +86,7 @@ export default function Home() {
 
   return (
     <div>
-      <NavBar internal="true" checker={loginRedirect} />
+      <NavBar internal={false} checker={loginRedirect} />
       <div className="formBlock">
         <span>
           {notification ? (
