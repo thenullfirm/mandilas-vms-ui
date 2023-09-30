@@ -1,11 +1,11 @@
-import styles from './FormField.module.css';
+import '@/app/globals.css';
 
 export default function FormField(props) {
   const employeeInfo = props.employees;
 
   return (
-    <div className={styles.formSection}>
-      <label className={styles.formLabel} htmlFor={props.id}>
+    <div className="formSection">
+      <label className="formLabel" htmlFor={props.id}>
         {props.label}
       </label>
       <select name={props.id} required={true}>

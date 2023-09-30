@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { serverUrl } from '@/envConfig';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { serverUrl } from '@/envConfig';
+import NavBar from '@/components/Navigation/NavBar';
 import FormFieldInput from '@/components/FormField/FormFieldInput';
 import FormFieldSelect from '@/components/FormField/FormFieldSelect';
 import Submit from '@/components/FormField/Submit';
+// import
+import '@/app/globals.css';
 
 export default function Home() {
   const [welcome, setWelcome] = useState([]);
@@ -72,45 +76,44 @@ export default function Home() {
     setNotification('');
   };
 
+  const { push } = useRouter();
+
+  const loginRedirect = (info) => {
+    if (!info.loggedIn) {
+      push('/login');
+    }
+  };
+
   return (
     <div>
-      <span>
-        {notification ? (
-          <p style={{ marginBottom: 20, color: 'grey', fontSize: 20 }}>
-            You have successfully scheduled a meeting with{' '}
-            {employeeData.map((emp) => {
-              if (emp._id === formData.employee) {
-                return emp.employeeName;
-              }
-            })}
-            <span
-              onClick={clearNotification}
-              style={{
-                marginLeft: 20,
-                color: 'red',
-                fontWeight: 'bold',
-                fontSize: 40,
-                marginRight: 10,
-                border: '1px solid red',
-                padding: '2px 6px',
-                borderRadius: 60,
-              }}
-            >
-              x
-            </span>
-          </p>
-        ) : (
-          ''
-        )}
-      </span>
-      <h2>{!welcome.info ? 'Loading ...' : <Link href="/">{welcome.info}</Link>}</h2>
-      <form onSubmit={handleSubmit}>
-        <FormFieldInput type="text" id="visitorName" label="Visitor name" />
-        <FormFieldInput type="text" id="visitorEmail" label="Visitor email" />
-        <FormFieldSelect employees={employeeData} id="employee" label="Employee name" />
-        <FormFieldInput type="datetime-local" id="timeOfVisit" label="Time of visitor" />
-        <Submit title="Schedule Meeting" />
-      </form>
+      <NavBar internal={false} checker={loginRedirect} />
+      <div className="formBlock">
+        <span>
+          {notification ? (
+            <p className="formNotice">
+              You have successfully scheduled a meeting with{' '}
+              {employeeData.map((emp) => {
+                if (emp._id === formData.employee) {
+                  return emp.employeeName;
+                }
+              })}
+              <span onClick={clearNotification} className="clearNotification">
+                x
+              </span>
+            </p>
+          ) : (
+            ''
+          )}
+        </span>
+        <h1 className="formTitle">{!welcome.info ? 'Loading ...' : <Link href="/">{welcome.info}</Link>}</h1>
+        <form onSubmit={handleSubmit}>
+          <FormFieldInput type="text" id="visitorName" label="Visitor name" />
+          <FormFieldInput type="text" id="visitorEmail" label="Visitor email" />
+          <FormFieldSelect employees={employeeData} id="employee" label="Employee name" />
+          <FormFieldInput type="datetime-local" id="timeOfVisit" label="Time of visitor" />
+          <Submit title="Schedule Meeting" />
+        </form>
+      </div>
     </div>
   );
 }

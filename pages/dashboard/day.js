@@ -4,6 +4,7 @@ import getVisitors from '@/config/getVisitors';
 import { useRouter } from 'next/navigation';
 import VisitorTable from '@/components/VisitorTable/VistorTable';
 import NavBar from '@/components/Navigation/NavBar';
+import '@/app/globals.css';
 
 export default function Dashboard() {
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -31,17 +32,19 @@ export default function Dashboard() {
 
   return (
     <div>
-      <NavBar checker={loginRedirect} />
-      <h1>Dashboard</h1>
-      {!dataLoaded ? (
-        <p>Loading ...</p>
-      ) : (
-        <div>
-          <h1 style={{ color: 'purple' }}>Date of Visit</h1>
+      <NavBar internal={true} checker={loginRedirect} />
+      <div className="page">
+        <h1>Dashboard</h1>
+        {!dataLoaded ? (
+          <p>Loading ...</p>
+        ) : (
+          <div>
+            <h1 className="viewLabel">Date of Visit</h1>
 
-          <VisitorTable tableId="time" data={timeSchedule} />
-        </div>
-      )}
+            <VisitorTable tableId="time" data={timeSchedule} />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

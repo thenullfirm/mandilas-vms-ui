@@ -1,9 +1,9 @@
-import styles from './FormField.module.css';
+import '@/app/globals.css';
 
 export default function Submit(props) {
   return (
-    <div className={styles.formSection}>
-      <button type="submit">{props.title}</button>
-    </div>
+    <button id="submit" type="submit" className="formSection">
+      {props.title}
+    </button>
   );
 }
